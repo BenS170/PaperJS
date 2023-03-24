@@ -1,12 +1,21 @@
 
-// Rectangle
+var circle = new Shape.Circle(new Point(200, 150), 50);
+circle.fillColor = 'black';
+var text = new PointText({
+    point: [0, 50],
+    content: 'x: 100, y: 100',
+    fillColor: 'black',
+    fontFamily: 'Courier New',
+    fontWeight: 'bold',
+    fontSize: 20
+});
 
-var origin = new Point(200, 100);
-var rectSize = new Size(250, 150);
+function onMouseMove(event){
+	circle.position = new Point(event.point);
+	circle.fillColor = new Color(event.point.x/view.size.width, event.point.y/view.size.height, 1);
+	circle.bounds.height = (event.point.y+event.point.x)/4;
+	circle.bounds.width = (event.point.y+event.point.x)/4;
 
-var myPath = new Path.Rectangle(origin, rectSize);
-myPath.strokeColor = 'gold';
-myPath.strokeWidth = 10;
-myPath.fillColor = 'maroon';
-
-myPath.segments[3].remove();
+	text.point = new Point(event.point.x-200, event.point.y-100);
+	text.content = '(x: ' + event.point.x + ', y: ' + event.point.y + ')';
+}
