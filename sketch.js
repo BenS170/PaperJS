@@ -1,62 +1,59 @@
-// random points
-var x = [20, 120, 220, 320, 420, 520, 620, 720, 820, 920, 1020, 1120, 1220, 1320];
-var y = [966, 961, 886, 928, 908, 888, 894, 926, 930, 914, 917, 934, 945, 906];
+// interactive scatter plot
 
-// declare a new path
-//*** your code ***//
-var path = new Path();
+var rain_chance = [88, 6, 10, 24, 18, 21, 49, 31, 20, 24, 36, 18, 43, 58, 38];
+var dates = ["Thu 02","Fri 03","Sat 04","Sun 05","Mon 06","Tue 07","Wed 08","Thu 09","Fri 10","Sat 11","Sun 12","Mon 13","Tue 14","Wed 15","Thu 16"];
+var totalcount = rain_chance.length;
 
 
+var height = view.size.height;
+var width = view.size.width;
+var yposition = height*0.5;            //middle of the screen
+var xposition = 75;
+var space = (width-2*xposition)/totalcount;
 
-// stylize: strokeWidth and strokeColor
-//*** your code ***//
-path.strokeWidth = 10;
-path.strokeColor = 'blue';
 
+for(var i=0;i<totalcount;i++)
+{
+    var x = xposition+space*i;
+    var y = yposition;
+    var radius = rain_chance[i]/2;
+   
+    var circle = new Path.Circle(new Point(x, y), radius);
+    circle.fillColor = new Color(rain_chance[i]/50, rain_chance[i]/100, rain_chance[i]/20);
 
+    var y_text = y+120;
+    var text = new PointText(x, y_text);
+    text.content = dates[i];
+    text.rotation = 45;
 
-// add points to the path, use for-loop
-//*** your code ***//
-for(var i=0; i<x.length; i++){
-	path.add(new Point(x[i], y[i]/2));
 }
 
+var rain_text = new PointText({
+    point: [50, 50],
+    content: '',
+    fillColor: 'red',
+    fontFamily: 'Courier New',
+    fontWeight: 'bold',
+    fontSize: 20,
+	rotation: -45
+});
 
-
-// make it smooth and selected
-path.smooth({ type: 'continuous' });
-path.selected = true;
-
-var segment = null; // selected segment
-var hitOptions = {
-	segments: true, // will select segments
-	stroke: false,  // will not select stroke
-	fill: false,	// will not select shape/raster
-	tolerance: 10
-};
-
-// when we click, we select an item
-function onMouseDown(event) {
-	segment = null;
-	var hitResult = project.hitTest(event.point, hitOptions);
-	// if clicked on empty space
-	if (!hitResult) return;
-	// if clicked on an item
-	else segment = hitResult.segment;
+function onMouseMove(event)
+{
+    if(event.item!=null)
+    {
+        var itemindex = event.item.index; 
+        if(itemindex%2==0)
+        {
+            var i = itemindex/2;
+            rain_text.content = rain_chance[i] + '% chance of rain.';
+            rain_text.position = new Point(event.item.position);
+            rain_text.position.y += 20;
+        }else{
+			rain_text.content = '';	
+		}
+    }else{
+		rain_text.content = '';
+	}
 }
 
-function onMouseDrag(event) {
-    // if a segment is cicked and dragged
-	if (segment) {
-
-	    // change the y position of the segment
-	    // use segment.point.y
-		//*** your code ***//
-		segment.point.y = event.point.y;
-
-
-
-
-		path.smooth({ type: 'continuous' });
-	} 
-}

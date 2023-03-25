@@ -11,17 +11,19 @@ var y = [30.0, 34.33883739, 37.81831482, 39.74927912, 39.74927912,
 
 // create a new path
 //*** your code ***//
+var path = new Path();
 
 
 
 // stylize: strokeWidth and strokeColor
 //*** your code ***//
-
+path.strokeWidth = 15;
+path.strokeColor = 'purple';
 
 // slow down factor
 // set slowDown variable to 20+last digit of your UIN 
 //*** your code ***//
-var slowDown = 20; 
+var slowDown = 20 + 73; 
 
 
 
@@ -36,11 +38,12 @@ function onFrame(event){
         
         // create a new Point from x[i] and y[i]
         //*** your code ***//
-        
+        var point = new Point(x[i], y[i]);
 
 
         // add that point to your path
         //*** your code ***//
+        path.add(point);
 
         
 

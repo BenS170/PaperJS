@@ -8,22 +8,28 @@ var y = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 // set the height variable to 100+last two digits of your UIN
 //*** your code ***//
-var height = 100;
+var height = 100+73;
 
 
 
 // create a new path
 //*** your code ***//
+var path = new Path();
 
 
 
 // stylize: strokeWidth and strokeColor
 //*** your code ***//
+path.strokeColor = 'green';
+path.strokeWidth = 17;
 
 
 
 // now use a for loop to add all the points to the path
 //*** your code ***//
+for(var i=0; i<x.length; i++){
+	path.add(new Point(x[i], y[i]));
+}
 
 
 
@@ -38,6 +44,7 @@ function onFrame(event) {
 		// Math.sin(event.time + i) gives a cyclic value based on time+i between -1 and 1
 		// multipy with the height and add 2*height to get the desired height and offset
 		//*** your code ***//
+		segment.point.y = Math.sin(event.time + i) + 2*height;
 		
 
 		// finally change the y position of the selected segment to the obtained sin value
@@ -48,7 +55,7 @@ function onFrame(event) {
 
 		// make the path smooth
 		//*** your code ***//
-
+		path.smooth({ type: 'continuous' });
 		
 	}
 }

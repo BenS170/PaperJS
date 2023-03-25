@@ -17,10 +17,12 @@ function onMouseDown(event)
   
     // re-declare the path to make it empty
     //*** your code ***//
+    path = new Path();
 
 
     // add tutle's current position to the path
     //*** your code ***//
+    
 
 
 
